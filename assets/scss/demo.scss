@@ -1,0 +1,23 @@
+@import "_variables";
+body{
+        background-color: $primary;
+        font-family: 'Noto Sans TC', sans-serif;
+}
+
+h2{
+     @extend %clearfix;
+}
+.box{
+  position: relative;
+  .pink{
+    background: pink;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.testImg{
+  background: url(~assets/img/demo.png);
+  width: 50px;
+  height: 50px;
+}
