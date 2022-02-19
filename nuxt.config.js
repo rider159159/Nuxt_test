@@ -41,7 +41,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/datepicker.js', mode: 'client' },
-    { src: '~/plugins/bootstrap.js', mode: 'client'}
+    { src: '~/plugins/bootstrap.js', mode: 'client'},
+    { src: '~/plugins/qs.js'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
-//const sleep = require("../utils/sleep"); 
+const sleep = require("../utils/sleep"); 
+const multer = require("multer");
+const fs = require("fs");
 
 app.patch('/test', (req, res) => {
   res.json({ title: 'wayne2225555', message: 'Hello there!'})
 })
 
-app.post('/pet', (req, res) => {
+app.get('/pet1', (req, res) => {
+  console.log('qeury',req.query)
   res.json(
     {
       "id": 0,
@@ -14,21 +17,55 @@ app.post('/pet', (req, res) => {
         "id": 0,
         "name": "string"
       },
-      "name": "doggie",
-      "photoUrls": [
-        "string"
-      ],
-      "tags": [
-        {
-          "id": 0,
-          "name": "string"
-        }
-      ],
-      "status": "available"
     }
   )
 })
 
+app.post('/pet2/:id', (req, res) => {
+  console.log('params',req.body)
+  res.json(
+    {
+      "id": 0,
+      "category": {
+        "id": 0,
+        "name": "string"
+      },
+    }
+  )
+})
+
+app.post('/form', async (req, res) => {
+  await sleep(0)
+  console.log(req.body,"req.body")
+  //res.status(401);
+  res.json({ title: 'wayne53535522', message: 'Hello there!'})
+})
+
+app.post('/pet/:id', (req, res) => {
+  console.log(req.body,"req.body")
+  // console.log(req.params.id," req.params.id")
+  //console.log(req.query,"req.query")
+  res.status(405); //405
+  res.json({
+    "id": 15435006010213,
+    "category": {
+      "id": 0,
+      "name": "string"
+    },
+    "name": "doggie",
+    "photoUrls": [
+      "string"
+    ],
+    "tags": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "status": "available"
+  })
+})
+  
 app.post('/ ', (req, res) => {
   res.json({
     courses: [{
@@ -55,5 +92,32 @@ app.post('/ ', (req, res) => {
     }]
   })
 })
+
+app.post("/file", async (req, res, next) => {
+  let dir = "uploads";
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./" + dir + "/");
+    },
+    filename: (req, file, cb) => {
+      var name = file.originalname;
+      var ext = name.split(".")[name.split(".").length - 1];
+      cb(null, Date.now() + "." + ext);
+    }
+  });
+  var upload = multer({ storage: storage }).single("videoFile");
+
+  upload(req, res, (err)=> {
+    //回傳值
+    res.status(200);
+    res.json({
+      code: 200,
+      message: "上傳成功"
+    });
+  });
+});
+
+
 
 module.exports = app

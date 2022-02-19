@@ -16,13 +16,13 @@
           <div class="description">
             {{item.description}}
           </div>
-          <nuxt-link class="details" :to="{
+          <!-- <nuxt-link class="details" :to="{
               name: 'course-id',
               params: {
                 id: item.id
               }
             }">
-          </nuxt-link>
+          </nuxt-link> -->
         </div>
       </div>
       <div v-if="courses.length == 0" class="section">

@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }));
+
 //下面兩段解決 CORS * 全部路由意思
 const cors = require('./utils/cors');
 app.use('/*',cors)
@@ -18,7 +21,6 @@ app.use((req, res, next) => {
   
 
 app.get('/', (req, res) => res.send('Hello World!'))
-console.log(port);
 app.listen(port, () => console.log(`mock server listening at http://localhost:${port}`))
 
 

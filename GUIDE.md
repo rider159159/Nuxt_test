@@ -28,6 +28,10 @@ this.$router.push({
   - 承上資料夾規則，若要將父層內容當作 components 一併顯示，並隨 router 切換子層內容可使用 <Nuxt-child /> ，但仍要注意要在 `pages` 資料夾底下設置對應資料夾 + 檔案。
     - 如 `pages/product` 以及子檔案狀況
   
+  - QS.js 快速轉字串、陣列、物件的套件 和 JSON 八成像
+  - `<input type="file" id="file" ref="file" @change="uploadFile" class="input-file">` 上傳檔案搭配 `this.$refs.file.files[0]` 也能抓到檔案
+
+
 
 ### 製作前後設定、概念
 - 為了 SEO 而使用的前後端語法
@@ -99,3 +103,17 @@ this.$router.push({
           ],
         ```
         
+### 前後端 API 實做
+  - 前端會有三種傳資料方法
+    1. get → req.query 
+     - 前端 API 網址後方添加 `?xxx=xx` `http://localhost:3034/api/pet1?id=2`
+     - 後端: `app.get('/pet1', (req, res) => { ....`
+     - 後端 req.qeury 會是 `{id:2}`
+     - 參考 getQuery()
+
+    2. 動態參數 → /:id → req.params.id 
+     - 前端 API 網址直接添加 `/` 呼叫 API `http://localhost:3034/api/pet2/rydertest`
+     - 後端: `app.post('/pet2/:id', (req, res) => {`
+     - 後端: `req.params` 會是 `params { id: 'rydertest' }`
+
+    3. post、put → req.body
