@@ -117,3 +117,20 @@ this.$router.push({
      - 後端: `req.params` 會是 `params { id: 'rydertest' }`
 
     3. post、put → req.body
+
+
+### 部屬
+  - 若要更新 Linux 伺服器上 Git 
+  - git pull origin
+  - npm install
+  - npm run build 
+  - pm2 reload all
+
+ryder-nuxt.website.conf
+
+server {
+    server_name ryder-nuxt.website www.ryder-nuxt.website;
+    location / {
+        proxy_pass http://localhost:3001; 
+    }
+}
