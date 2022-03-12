@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "express": "^4.17.2",
     "multer": "^1.4.4"
   }

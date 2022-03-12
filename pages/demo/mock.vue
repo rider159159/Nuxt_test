@@ -16,6 +16,8 @@
   </div>
 </template>
 <script>
+import API from '~/api/api.js'
+
 export default {
   layout: 'mock',
   data () {
@@ -121,6 +123,22 @@ export default {
   created(){
   },
   mounted(){
+        console.log(process.env.api_url);
+
+       this.$axios({
+      method: 'post',
+      url: API.member.exchangeToken.url,
+  //  baseURL:  'http://localhost:3034',
+      headers: {
+ 'Content-Type': 'application/json' 
+      },
+      data: {}
+    }).then((response)=>{
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    });
+
   },
   computed: {
   },

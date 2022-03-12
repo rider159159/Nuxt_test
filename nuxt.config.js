@@ -1,7 +1,18 @@
 export default {
+  // env:{
+  //   firebaseApiKey: "AIzaSyBpyaspqWf2iWyLz23KzyF3MtXDE6TnwS4"
+  // },
+
   serverMiddleware: [
     { path: '/api', handler: '~/server/api.js' },
+    { path: '/auth', handler: '~/server/auth.js' },
+
   ],
+  buildModules: [
+    ["@nuxtjs/dotenv", {filename: ".env." + process.env.NODE_ENV}]
+  ],
+
+
   modules: [
     '@nuxtjs/axios',
     // '@nuxtjs/proxy'
@@ -43,20 +54,20 @@ export default {
     { src: '~/plugins/datepicker.js', mode: 'client' },
     { src: '~/plugins/bootstrap.js', mode: 'client'},
     { src: '~/plugins/qs.js'},
+    { src: '~/plugins/axios.js'},
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/axios',
+  // modules: [
+  //   '@nuxtjs/axios',
 
-  ],
+  // ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: { 

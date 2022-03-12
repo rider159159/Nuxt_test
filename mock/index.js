@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3013
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
@@ -11,6 +11,9 @@ app.use('/*',cors)
 
 const test = require("./router/test");
 app.use('/api', test);
+
+const ryder = require("./router/ryder");
+app.use('/', ryder);
 
 
 // 中間層 要執行第三個參數才能往下一頁

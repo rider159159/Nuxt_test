@@ -24,15 +24,31 @@
 </template>
 
 <script>
+import API from '~/api/api.js'
 export default {
-  fetch(context){
-    return context.$axios("api/course").then((data)=>{
-      console.log(data)
-      context.store.commit("set_courses",{
-        ...data.data
-      })
-    })
+  async asyncData(context) {
+    context.$axios({
+      method: 'post',
+      url: API.member.exchangeToken.url,
+      baseURL:  'http://localhost:3034',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      data: {}
+    }).then((response)=>{
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    });
   },
+  // fetch(context){
+  //   return context.$axios("api/course").then((data)=>{
+  //     console.log(data)
+  //     context.store.commit("set_courses",{
+  //       ...data.data
+  //     })
+  //   })
+  // },
 
   // async asyncData(context) {
   //   //回傳 data
@@ -58,22 +74,37 @@ export default {
     };
   },
   mounted() {
-    this.axios();
+    this.$axios({
+      method: 'post',
+      url: API.member.exchangeToken.url,
+      // baseURL:  'http://localhost:3034',
+      headers: {
+      'Content-Type': 'application/json' 
+      },
+      data: {}
+    }).then((response)=>{
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    });
+
+    // this.axios();
+    // console.log('index');
   },
   methods: {
-    axios() {
-      this.$axios("/api/test").then((res) => {
-        this.test = res;
-      });
-    },
-    pushRouter() {
-      this.$router.push({
-        path: '/demo/test'
-      });
-      this.$router.push({
-        name: "demo-test",
-      });
-    },
+    // axios() {
+    //   this.$axios("/api/test").then((res) => {
+    //     this.test = res;
+    //   });
+    // },
+    // // pushRouter() {
+    //   this.$router.push({
+    //     path: '/demo/test'
+    //   });
+    //   this.$router.push({
+    //     name: "demo-test",
+    //   });
+    // },
   },
   computed: {
     get_courses() {

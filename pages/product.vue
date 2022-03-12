@@ -7,6 +7,7 @@
 </template>
 <script>
 export default {
+  middleware: ['auth'],
   methods:{
     test(){
       this.$router.push({

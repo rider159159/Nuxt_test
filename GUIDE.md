@@ -51,17 +51,20 @@ this.$router.push({
     - 可在這個 API 交流的階層做一些判斷
 
  - nuxt 有兩種伺服器組合方法
-   1. 把 API 檔案也放在 Nuxt 專案下，並在 nuxt.config.js 做相關設定
+   1. 把 API 檔案也放在 Nuxt 專案下，並在 nuxt.config.js 做 serverMiddleware 相關設定
     ```js
     serverMiddleware: [
       { path:'/api', handler: '~/server/api.js' }, 
     ], 
     ```
-       - src/serve 底下資料夾採用此設定。 
-       - 若要 call 這邊 API 會使用 http://localhost:3000/api/xxx ，和 nuxt 同 prot
+    而這種 serverMiddleware 就是在 serve 端執行 node.js 程式的功能
+     - src/serve/auth.js、 src/serve/api.js 是採用 node.js 在後端執行的程式，理論上透過 node.js 執行非 JS 的 API 也沒問題 
+     - src/serve 底下資料夾採用此設定。 
+     - 若要在 Postman 等等非本地， call 這邊 API 會使用 http://localhost:3000/api/xxx ，和 nuxt 同 prot，而 api 則是 JS 檔名，xxx 是 API 名稱
+     - 若在本地執行可參考 demo/newTest 方式，基本上類似直接呼叫
     2. 和 SPA 一樣 伺服器、網頁分離
       - src/mock 資料夾採用此設定。
-      - 若要 call 這邊 API 會使用 http://localhost:3034/api/xxx ，由 mock 中自行設定
+      - 若要在 call 這邊 API 會使用 http://localhost:3034/api/xxx ，由 mock 中自行設定
    - 不過上述兩者為了 SEO 都需使用 `asyncData` 方法滿足爬蟲 
 
 ### mock 
@@ -134,3 +137,6 @@ server {
         proxy_pass http://localhost:3001; 
     }
 }
+
+### 問題 
+- nuxt serverMiddleware 為何？

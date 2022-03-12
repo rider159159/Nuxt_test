@@ -4,6 +4,7 @@ const app = express();
 app.get('/test', (req, res) => {
    res.json({ title: 'Ryder', message: 'Hello there!'})
 })
+
 app.get('/course', (req, res) => {
    res.json({
       courses: [{

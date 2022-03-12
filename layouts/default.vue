@@ -1,6 +1,10 @@
 <template>
   <div>
-    <LayoutHeader></LayoutHeader>
+   <Header 
+      @loginClick="loginClick" 
+      @registeredClick="registeredClick" 
+      title="wayne1894 教學網"
+    ></Header>
     <div class="container-fluid">
       <div class="row">
         <nav
@@ -88,12 +92,102 @@
         </main>
       </div>
     </div>
-    <LayoutFooter></LayoutFooter>
+    <!-- <LayoutFooter></LayoutFooter> -->
+      <ModalLoginModal
+      v-if="openModal" 
+      @loginModalSubmit="loginModalSubmit" 
+      :modalTyple="modalTyple" 
+      :openModal.sync="openModal" 
+    ></ModalLoginModal>
+
   </div>
 </template>
 
 <script>
-export default {};
+   import jwtDecode from 'jwt-decode';
+import Cookie from 'js-cookie';
+
+export default {
+mounted(){
+    if(this.$route.query.id_token && this.$route.query.refresh_token){
+      // let id_token_Decode = jwtDecode(this.$route.query.id_token);
+      // this.$store.commit('setUserLoggedIn', {
+      //   id_token: this.$route.query.id_token,
+      //   refresh_token: this.$route.query.refresh_token,
+      //   userUid: id_token_Decode.user_id,
+      //   userPicture: id_token_Decode.picture,
+      //   userName: id_token_Decode.name,
+      // });
+      window.history.replaceState(null, null, window.location.pathname);
+      return
+    }
+    if(Cookie.get("id_token")) {
+      this.$store.commit('setUserLoggedIn', {
+        id_token: Cookie.get("id_token"),
+        refresh_token: Cookie.get("refresh_token"),
+        userUid: Cookie.get("userUid"),
+        userPicture: Cookie.get("userPicture"),
+        userName: Cookie.get("userName"),
+      });          
+   }
+
+  },
+
+data () {
+    return {
+      openModal: false,
+      modalTyple: ""
+    }
+  },
+ methods:{
+    loginClick(){
+      this.openModal = !this.openModal;
+      this.modalTyple = "login"
+    },
+    registeredClick(){
+      this.openModal = !this.openModal;
+      this.modalTyple = "registered"
+    },
+       loginModalSubmit(data){
+    if(data.modalTyple == "login"){
+      this.$axios({
+        method: 'post',
+        baseURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + process.env.firebaseApiKey,
+        headers: {
+          'Content-Type': 'application/json' 
+        },
+        data: {
+          ...data,
+          returnSecureToken: true
+        }
+      }).then((response)=> {
+        console.log(response.data);
+        this.openModal =false
+      }).catch(error => {
+          console.log(error)
+      });
+    }
+    if(data.modalTyple == "registered"){
+      this.$axios({
+        method: 'post',
+        baseURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + process.env.firebaseApiKey,
+        headers: {
+          'Content-Type': 'application/json' 
+        },
+        data: {
+          ...data,
+          returnSecureToken: true
+        }
+      }).then((response)=> {
+        console.log(response.data);
+        this.openModal =false
+      }).catch(error => {
+          console.log(error)
+      });
+    }
+}
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
