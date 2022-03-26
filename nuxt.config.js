@@ -16,6 +16,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     // '@nuxtjs/proxy'
+    'cookie-universal-nuxt',
   ],
   // axios: {
   //   proxy: true
@@ -77,7 +78,7 @@ export default {
       }
     },
     extend (config, ctx) {
-        console.log(config.module.rules); //查看現在的 loader
+        // console.log(config.module.rules); //查看現在的 loader
     }
   } 
 }

@@ -21,7 +21,7 @@
           <img style="max-height: inherit;" class="is-rounded" :src="getUserPicture">
         </figure>
         <span style=" vertical-align: top;line-height: 32px;">
-          {{getUserName}}
+          使用者名稱:{{getUserName}}
         </span>
       </a>
       <div class="navbar-dropdown is-boxed">
@@ -31,6 +31,10 @@
         <hr class="navbar-divider">
         <a class="navbar-item" @click="logout">登出</a>
       </div>
+    </div>
+    <div>
+      <span> 是否登入: </span>
+      <p class="text-primary">{{isUserLoggedIn?'是':'否'}}</p>
     </div>
   </div>
 </template>
@@ -43,16 +47,16 @@ export default {
       return {}
   },
   computed: {
-     getUserName (){
+    getUserName (){
       return this.$store.state.userName
     },
     getUserPicture () {
- if(!this.$store.state.userPicture) return "https://bulma.io/images/placeholders/128x128.png"
+      if(!this.$store.state.userPicture) return "https://bulma.io/images/placeholders/128x128.png"
       return this.$store.state.userPicture
     },
-      isUserLoggedIn () {
-          return this.$store.state.isUserLoggedIn
-      }
+    isUserLoggedIn () {
+      return this.$store.state.isUserLoggedIn
+    }
   },
   methods: {
       logout () {

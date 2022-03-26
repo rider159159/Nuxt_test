@@ -18,7 +18,7 @@ app.use('/', ryder);
 
 // 中間層 要執行第三個參數才能往下一頁
 app.use((req, res, next) => {
-  console.log('Time:', Date.now());
+  // console.log('Time:', Date.now());
   next();
 });
   

@@ -11,70 +11,65 @@ export const state = () => ({
 export const actions = {
 
   nuxtServerInit ({ commit }, context) {
-   return this.$axios({
-      method: 'post',
-      url: API.member.exchangeToken.url,
-      baseURL:  'http://localhost:3034',
-      headers: {
- 'Content-Type': 'application/json' 
-      },
-      data: {}
-    }).then((response)=>{
-      console.log(response.data)
-    }).catch(error => {
-      console.log(error)
-    });
-
+    console.log('context',context.req.headers.cookie)
     //這邊是給 Oauth 回來時提早觸發
-    // if(context.query.id_token && context.query.refresh_token){
-    //   let id_token_Decode = jwtDecode(context.query.id_token); 
-    //     commit('setUserLoggedIn', {
-    //       id_token: context.query.id_token,
-    //       refresh_token: context.query.refresh_token,
-    //       userUid: id_token_Decode.user_id,
-    //       userPicture: id_token_Decode.picture,
-    //       userName: id_token_Decode.name,
-    //     });
-    //     context.res.setHeader('Set-Cookie', [
-    //        `id_token=${context.query.id_token}`,
-    //         `refresh_token=${context.query.id_token}`,
-    //         `userUid=${id_token_Decode.user_id}`,
-    //         `userPicture=${id_token_Decode.picture}`,
-    //         `userName=${escape(id_token_Decode.name)}`
-    //     ]);
-    //   return
-    // }
-    // if(!!context.req.headers.cookie){
-    //   if(context.req.headers.cookie.indexOf("id_token=")>-1){
-    //     //nuxtServerInit 取得 cookie的方式和前端不同
-    //     let picture = decodeURI(context.req.headers.cookie.split("userPicture=")[1].split(" ")[0]);
-    //     let name = decodeURI(unescape(context.req.headers.cookie.split("userName=")[1].split(" ")[0]));
-    //     let uid = decodeURI(context.req.headers.cookie.split("userUid=")[1].split(" ")[0]);
-    //     commit('setUserLoggedIn',{
-    //      userPicture: picture,
-    //      userName: name,
-    //      userUid : uid
-    //     });
-    //   }
-    //  }
+    // Oauth 回來後，用 setUserLoggedIn 儲存至前端
+    if(context.query.id_token && context.query.refresh_token){
+      let id_token_Decode = jwtDecode(context.query.id_token); 
+        commit('setUserLoggedIn', {
+          id_token: context.query.id_token,
+          refresh_token: context.query.refresh_token,
+          userUid: id_token_Decode.user_id,
+          userPicture: id_token_Decode.picture,
+          userName: id_token_Decode.name,
+        });
+        // Oauth cookie 儲存前端，同時也要儲存 nuxt serve 端
+        context.app.$cookies.set("id_token",context.query.id_token);
+        context.app.$cookies.set("refresh_token",context.query.refresh_token);
+        context.app.$cookies.set("userUid",id_token_Decode.user_id);
+        context.app.$cookies.set("userPicture",id_token_Decode.picture);
+        context.app.$cookies.set("userName",id_token_Decode.name);
+        // 使用套件後改成以上寫法
+        // context.res.setHeader('Set-Cookie', [
+        //   `id_token=${context.query.id_token}`,
+        //   `refresh_token=${context.query.id_token}`,
+        //   `userUid=${id_token_Decode.user_id}`,
+        //   `userPicture=${id_token_Decode.picture}`,
+        //   `userName=${escape(id_token_Decode.name)}`
+        // ]);
+      return
+    }
+    // 有 cookie 就判斷是登入
+    if(context.app.$cookies.get('id_token')){
+      //獲得 Serve 端 cookie ，這邊無法在前端看到，用 commit 進入下一個 mutations 後才能看見
+      let picture = context.app.$cookies.get('userPicture');
+      let name = context.app.$cookies.get('userName');
+      let uid = context.app.$cookies.get('userUid');
+      commit('setUserLoggedIn',{
+        userPicture: picture,
+        userName: name,
+        userUid : uid
+      });  
+    }
   },
-  }
+}
   
   
 
 export const mutations = {
   setUserLoggedIn: (state, payload) => {
     state.isUserLoggedIn = true;
+    console.log('userPicture',state.userName);
     state.userPicture = payload.userPicture || "https://bulma.io/images/placeholders/128x128.png";
     state.userName =payload.userName;
     state.userUid = payload.userUid;
-
-    Cookie.set("id_token",payload.id_token);
-    Cookie.set("refresh_token",payload.refresh_token);
-    Cookie.set('userUid', state.userUid);
-    Cookie.set('userPicture', state.userPicture); 
-    Cookie.set('userName', state.userName);
-
+    if(process.client){
+      Cookie.set("id_token",payload.id_token);
+      Cookie.set("refresh_token",payload.refresh_token);
+      Cookie.set('userUid', state.userUid);
+      Cookie.set('userPicture', state.userPicture); 
+      Cookie.set('userName', state.userName);
+    }
   },
   set_courses (state, payload) {
     state.courses = payload.courses
@@ -88,6 +83,6 @@ export const mutations = {
     Cookie.remove('userUids');
     Cookie.remove('userPicture'); 
     Cookie.remove('userName');
-    $nuxt.$router.push({ name: 'index' });
+    // $nuxt.$router.push({ name: 'index' });
   },
 }

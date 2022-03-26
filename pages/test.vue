@@ -29,8 +29,9 @@
 </div>
   </div>
 </template>
-
 <script>
+import API  from '~/api/api.js'
+
 export default {
   data(){
     return{
@@ -39,7 +40,7 @@ export default {
     }
   },
   methods:{
-       loginModalSubmit(){
+    loginModalSubmit(){
     // if(data.modalTyple == "login"){
     //   this.$axios({
     //     method: 'post',
@@ -61,8 +62,9 @@ export default {
     // if(data.modalTyple == "registered"){
     // }
       this.$axios({
-        method: 'post',
-        baseURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + process.env.firebaseApiKey,
+        method: API.member.login.method,
+        url: API.member.login.url,
+        baseURL:  process.env.google_api_url,
         headers: {
           'Content-Type': 'application/json' 
         },
@@ -71,13 +73,23 @@ export default {
           "email":this.email
         }
       }).then((response)=> {
-        console.log(response.data);
         this.openModal =false
+        this.$store.commit('setUserLoggedIn', {
+        id_token: response.data.idToken,
+        refresh_token: response.data.refreshToken,
+        userUid: response.data.localId,
+        userName: response.data.email,
+      });
       }).catch(error => {
           console.log(error)
       });
-}
+ 
+
+    }
   },
+  mounted(){
+    // this.loginModalSubmit()
+  }
 
 }
 </script>

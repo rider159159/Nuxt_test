@@ -109,27 +109,27 @@ import Cookie from 'js-cookie';
 
 export default {
 mounted(){
-    if(this.$route.query.id_token && this.$route.query.refresh_token){
-      // let id_token_Decode = jwtDecode(this.$route.query.id_token);
-      // this.$store.commit('setUserLoggedIn', {
-      //   id_token: this.$route.query.id_token,
-      //   refresh_token: this.$route.query.refresh_token,
-      //   userUid: id_token_Decode.user_id,
-      //   userPicture: id_token_Decode.picture,
-      //   userName: id_token_Decode.name,
-      // });
-      window.history.replaceState(null, null, window.location.pathname);
-      return
-    }
-    if(Cookie.get("id_token")) {
-      this.$store.commit('setUserLoggedIn', {
-        id_token: Cookie.get("id_token"),
-        refresh_token: Cookie.get("refresh_token"),
-        userUid: Cookie.get("userUid"),
-        userPicture: Cookie.get("userPicture"),
-        userName: Cookie.get("userName"),
-      });          
-   }
+  //   if(this.$route.query.id_token && this.$route.query.refresh_token){
+  //     let id_token_Decode = jwtDecode(this.$route.query.id_token);
+  //     this.$store.commit('setUserLoggedIn', {
+  //       id_token: this.$route.query.id_token,
+  //       refresh_token: this.$route.query.refresh_token,
+  //       userUid: id_token_Decode.user_id,
+  //       userPicture: id_token_Decode.picture,
+  //       userName: id_token_Decode.name,
+  //     });
+  //     window.history.replaceState(null, null, window.location.pathname);
+  //     return
+  //   }
+  //   if(Cookie.get("id_token")) {
+  //     this.$store.commit('setUserLoggedIn', {
+  //       id_token: Cookie.get("id_token"),
+  //       refresh_token: Cookie.get("refresh_token"),
+  //       userUid: Cookie.get("userUid"),
+  //       userPicture: Cookie.get("userPicture"),
+  //       userName: Cookie.get("userName"),
+  //     });          
+  //  }
 
   },
 

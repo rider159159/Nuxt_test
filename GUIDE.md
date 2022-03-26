@@ -140,3 +140,7 @@ server {
 
 ### 問題 
 - nuxt serverMiddleware 為何？
+## 紀錄
+- https://hiskio.com/courses/342/lectures/16807 
+- 23:03  錯誤處理 2022/03/23
+- 

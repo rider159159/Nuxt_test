@@ -153,9 +153,7 @@ export default {
           return this.repeatPasswordWithError = true;
         }
       }
-      
-      console.log("emit");
-      
+            
       this.$emit("loginModalSubmit",{
         modalTyple: this.modalTyple,
         name: this.name,

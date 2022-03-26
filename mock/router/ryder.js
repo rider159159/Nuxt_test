@@ -18,7 +18,7 @@ app.get("/", async (req, res, next) => {
 //會員註冊 with email / password
 app.post(API.member.registered.url, async (req, res, next) => {
   await sleep(0);
-  // console.log(req.body,"req.body");
+  console.log(req.body,"req.body");
   // console.log(req.params,"req.params");
   
   res.status(200);
@@ -35,11 +35,12 @@ app.post(API.member.registered.url, async (req, res, next) => {
 //會員登入 with email / password
 app.post(API.member.login.url, async (req, res, next) => {
   await sleep(0);
+  console.log(req.body.email,"req.body");
 
   res.status(200);
   res.json({
     "localId": "ZY1rJK0eYLg...",
-    "email": "[user@example.com]",
+    "email": `${req.body.email}`,
     "displayName": "",
     "idToken": "[ID_TOKEN]",
     "registered": true,

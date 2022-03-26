@@ -8,7 +8,11 @@ export default function ({ $axios, redirect, error }) {
   
   //每次請求時全域觸發
   $axios.onRequest(config => {
-    console.log(config,"config")
+        // 每次請求傳送 firebase 的 key
+        config.params = {
+          key: process.env.firebaseApiKey
+        }
+    // console.log(config,"config")
   })
 
   $axios.onResponse(config => {
