@@ -22,6 +22,7 @@ export default function ({ $axios, redirect, error }) {
     const code = parseInt(data.response && data.response.status)
     if (code === 500) {
       error('500')
+      alert('500')
     }
   })
 }

@@ -36,7 +36,18 @@ app.post(API.member.registered.url, async (req, res, next) => {
 app.post(API.member.login.url, async (req, res, next) => {
   await sleep(0);
   console.log(req.body.email,"req.body");
-
+  // res.status(400);
+  // res.json({
+  //   "error":{
+  //     "code":400,
+  //     "message":'錯誤怪我囉',
+  //     "errors":[
+  //       {
+  //         "message":'test',
+  //       }
+  //     ],
+  //   }
+  // })
   res.status(200);
   res.json({
     "localId": "ZY1rJK0eYLg...",

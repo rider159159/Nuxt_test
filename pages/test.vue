@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-whatever="@mdo">
   開啟註冊彈窗
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -81,10 +81,11 @@ export default {
         userName: response.data.email,
       });
       }).catch(error => {
-          console.log(error)
+        const code = parseInt(error.response &&error.response.status)  //取得status code
+        console.log(code);
+        console.log(error.response.data) //取得資料
+        console.log("TO DO error !")
       });
- 
-
     }
   },
   mounted(){
