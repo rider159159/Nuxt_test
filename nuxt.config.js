@@ -1,8 +1,4 @@
 export default {
-  // env:{
-  //   firebaseApiKey: "AIzaSyBpyaspqWf2iWyLz23KzyF3MtXDE6TnwS4"
-  // },
-
   serverMiddleware: [
     { path: '/api', handler: '~/server/api.js' },
     { path: '/auth', handler: '~/server/auth.js' },
@@ -56,19 +52,12 @@ export default {
     { src: '~/plugins/bootstrap.js', mode: 'client'},
     { src: '~/plugins/qs.js'},
     { src: '~/plugins/axios.js'},
-
+    { src: '~/plugins/sweet-alert.js'},
+    // {src: '~/api/test.js', ssr: false},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-
-  // Modules: https://go.nuxtjs.dev/config-modules
-  // modules: [
-  //   '@nuxtjs/axios',
-
-  // ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: { 

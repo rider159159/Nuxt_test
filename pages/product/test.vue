@@ -15,9 +15,7 @@ export default {
   async asyncData (context) { //打ajax (async await)
     let test = await context.$axios("/api/test");
     // 回傳回來會是 正式 res 
-    console.log(test)
     // 上下文物件
-    console.log(context)
     return test.data
   },
 
@@ -26,12 +24,7 @@ export default {
       test:'',
       }
     },
-  created(){
-    console.log(2)
-    console.log('我是serve.vue')
-  },
   mounted(){
-    console.log(3)
     this.axios()
   },
   methods:{

@@ -11,7 +11,6 @@ export const state = () => ({
 export const actions = {
 
   nuxtServerInit ({ commit }, context) {
-    console.log('context',context.req.headers.cookie)
     //這邊是給 Oauth 回來時提早觸發
     // Oauth 回來後，用 setUserLoggedIn 儲存至前端
     if(context.query.id_token && context.query.refresh_token){
@@ -52,6 +51,41 @@ export const actions = {
       });  
     }
   },
+
+  // 將使用者資料存至資料庫
+  saveMemberInfo({state}, payload){
+    let uid = (payload && payload.userUid) || state.userUid;
+    let _data = payload || {
+      name: state.userName,
+      picture: state.userPicture,
+      userId: state.userId
+    }
+    return this.$axios({
+      method: API.patchMemberInfo.method,
+      url: API.patchMemberInfo.url.replace(":user_id.json",uid + ".json"),
+      // 寫物件
+      data: {
+        ..._data
+      }
+    }).then((response)=> {
+      console.log(response.data,"patchMemberInfo response")
+    }).catch(error => {
+      console.log(error,"error")
+    });
+  },
+
+  // 獲得使用者詳細資料
+  getUserInfo({state}, payload) {
+    console.log(payload);
+    return this.$axios({
+      method: API.member.getUserInfo.method,
+      url: API.member.getUserInfo.url.replace(":user_id.json",payload + ".json")
+    }).then((response)=> {
+      console.log(response.data,"patchMemberInfo response")
+    }).catch(error => {
+      console.log(error,"error")
+    });
+  },
 }
   
   
@@ -59,7 +93,6 @@ export const actions = {
 export const mutations = {
   setUserLoggedIn: (state, payload) => {
     state.isUserLoggedIn = true;
-    console.log('userPicture',state.userName);
     state.userPicture = payload.userPicture || "https://bulma.io/images/placeholders/128x128.png";
     state.userName =payload.userName;
     state.userUid = payload.userUid;

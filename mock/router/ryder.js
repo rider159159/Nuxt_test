@@ -52,6 +52,7 @@ app.post(API.member.login.url, async (req, res, next) => {
   res.json({
     "localId": "ZY1rJK0eYLg...",
     "email": `${req.body.email}`,
+    "userName":'Ryder',
     "displayName": "",
     "idToken": "[ID_TOKEN]",
     "registered": true,

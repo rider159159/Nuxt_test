@@ -13,7 +13,8 @@
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body test">
+        test
         <a href="/auth/" class="button is-fullwidth google">
           <span>使用 google 帳號 </span>
         </a>
@@ -41,26 +42,6 @@ export default {
   },
   methods:{
     loginModalSubmit(){
-    // if(data.modalTyple == "login"){
-    //   this.$axios({
-    //     method: 'post',
-    //     baseURL: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + process.env.firebaseApiKey,
-    //     headers: {
-    //       'Content-Type': 'application/json' 
-    //     },
-    //     data: {
-    //       ...data,
-    //       returnSecureToken: true
-    //     }
-    //   }).then((response)=> {
-    //     console.log(response.data);
-    //     this.openModal =false
-    //   }).catch(error => {
-    //       console.log(error)
-    //   });
-    // }
-    // if(data.modalTyple == "registered"){
-    // }
       this.$axios({
         method: API.member.login.method,
         url: API.member.login.url,
@@ -90,6 +71,7 @@ export default {
   },
   mounted(){
     // this.loginModalSubmit()
+    console.log('test');
   }
 
 }

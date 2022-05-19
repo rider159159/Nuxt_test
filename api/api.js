@@ -15,6 +15,15 @@ const API = {
       url: "/v1/token",
       method: "post"
     },
+    //獲得使用者資訊
+    getUserInfo:{
+      url: "users/:user_id.json",
+      method: "get",
+    },
+  },
+  getProduct:{
+    url: "/product.json",
+    method: "get"
   },
   //取得課程資訊
   getCourses: {
@@ -29,6 +38,16 @@ const API = {
   //取得課程內容
   getCoursesItem: {
     url: "/courses_item/:id.json",
+    method: "get"
+  },
+  //新增/編輯會員資料
+  patchMemberInfo: {
+    url: "/users/:user_id.json",
+    method: "patch"
+  },
+  //取得會員資料
+  getMemberInfo: {
+    url: "/users/:user_id.json",
     method: "get"
   },
 };
